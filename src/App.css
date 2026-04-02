@@ -15,14 +15,17 @@
 .app-profile {
   padding: 1.5rem;
   border-right: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.app-avatar {
-  width: 96px;
-  height: 96px;
+.app-avatar img {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
   border-radius: 50%;
-  background: #e0e0e0;
-  margin-bottom: 1rem;
 }
 
 .app-title {
@@ -52,9 +55,10 @@
 }
 
 .app-footer {
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-top: 1px solid #e8e8e8;
-  font-size: 0.85rem;
+  background-color: #f9c6c611;
+  font-size: 0.8rem;
   color: #128c658d;
 }
 
@@ -73,6 +77,8 @@
   }
 }
 
-svg {
+.app-svg {
   font-family: 'Datatype';
+  width: 100%;
+  height: 100%;
 }
