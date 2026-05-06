@@ -10,8 +10,9 @@ function App() {
             <img src="/profil_pic.jpg" alt="Profile picture" />
             </div>
           <h1 className="app-title">Fotini Deligiannaki</h1>
-          <p className="app-bio">
-            A short message about yourself and this page — data visualization with D3 and React.
+          <p className="app-bio" style={{ textAlign: 'center' }}>
+            <span style={{ fontStyle: 'italic', color: 'grey'}}>~~ Welcome to my little data corner ~~</span> <br /><br />Here you can explore my data visualization projects. <br />
+            I priamarily use Python, D3 and React to create my visualizations (check my <a href="https://github.com/fotinidelig" target="_blank" rel="noopener noreferrer">GitHub</a> for more details).
           </p>
         </aside>
 

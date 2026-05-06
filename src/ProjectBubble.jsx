@@ -1,7 +1,6 @@
 import React from 'react';
-import * as d3 from 'd3';
 
-export default function ProjectBubble({x, y, radius, color, opacity, name}) {
+export default function ProjectBubble({x, y, radius, color, opacity, project}) {
 
   const style = {
     fill: color,
@@ -12,11 +11,10 @@ export default function ProjectBubble({x, y, radius, color, opacity, name}) {
   }
 
   return (
-    <g>
-        <circle style={style} key={name} cx={x} cy={y} r={radius}/>
-        <text x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize="12" fill="white">
-            {name}
-        </text>
-    </g>
+    <a href={project.demo} target="_blank" rel="noopener noreferrer">
+      <g>
+          <circle style={style} key={project.name} cx={x} cy={y} r={radius}/>
+      </g>
+    </a>
   );
 }

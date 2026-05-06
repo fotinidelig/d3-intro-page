@@ -44,13 +44,13 @@ export const PortfolioSvg = ({ width, height }) => {
 
   const durationScale = d3.scaleSqrt()
     .domain([minDuration, maxDuration])
-    .range([25 * scale, 60 * scale]);
+    .range([20 * scale, 50 * scale]);
 
   const maxLines = d3.max(projects.projects, (project) => parseInt(project.lines));
   const minLines = d3.min(projects.projects, (project) => parseInt(project.lines));
-  const linesScale = d3.scaleSqrt()
-    .domain([minLines, maxLines])
-    .range([0.3, 0.8]);
+  // const linesScale = d3.scaleSqrt()
+  //   .domain([minLines, maxLines])
+  //   .range([0.3, 0.8]);
 
   const xAxis = (
     <g className="portfolio-x-axis" aria-hidden="true">
@@ -157,7 +157,8 @@ export const PortfolioSvg = ({ width, height }) => {
           y={yScale(project.difficulty)} 
           radius={durationScale(parseInt(project.duration))} 
           color="#128c65" 
-          opacity={linesScale(parseInt(project.lines))} 
+          // opacity={linesScale(parseInt(project.lines))} 
+          opacity={0.9}
           project={project} />
       ))}
     </svg>
