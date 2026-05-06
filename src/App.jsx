@@ -1,5 +1,5 @@
 import './App.css'
-import PortfolioSvg from './PortfolioSvg.jsx'
+import { ResponsivePortfolioSvg } from './PortfolioSvg.jsx'
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         </aside>
 
         <section className="app-viz" aria-label="Visualization and projects">
-          <PortfolioSvg width={1200} height={690} />
+          <ResponsivePortfolioSvg />
         </section>
       </main>
 
