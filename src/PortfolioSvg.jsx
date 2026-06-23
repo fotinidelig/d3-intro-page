@@ -3,6 +3,8 @@ import * as d3 from 'd3';
 import ProjectBubble from './ProjectBubble';
 import projects from './assets/projects.json';
 import { useDimensions } from './use-dimensions';
+import { AxisBottom } from './AxisBottom';
+import { AxisLeft } from './AxisLeft';
 
 export const PortfolioSvg = ({ width, height }) => {
   if (!width || !height) return null;
@@ -52,71 +54,17 @@ export const PortfolioSvg = ({ width, height }) => {
   //   .domain([minLines, maxLines])
   //   .range([0.3, 0.8]);
 
-  const xAxis = (
-    <g className="portfolio-x-axis" aria-hidden="true">
-        <line
-          x1={margin.left}
-          x2={width - margin.right}
-          y1={axisY}
-          y2={axisY}
-          stroke="currentColor"
-          strokeWidth={1}
-          opacity={0.35}
-        />
-        {xTicks.map((d) => {
-          const x = xScale(d);
-          return (
-            <g key={d.toISOString()} transform={`translate(${x}, ${axisY})`}>
-              <line y2={5} stroke="currentColor" strokeWidth={1} opacity={0.35} />
-              <text
-                y={18}
-                textAnchor="middle"
-                fill="currentColor"
-                opacity={0.65}
-                fontSize={12}
-              >
-                {formatMonth(d)}
-              </text>
-            </g>
-          );
-        })}
-      </g>
-  )
+  const xAxis = 
+  <AxisBottom 
+    xScale={xScale} 
+    xTicks={xTicks} 
+    axisY={axisY} 
+    formatMonth={formatMonth} 
+    margin={margin} 
+    width={width} 
+  />;
 
-  const yAxis = (
-    <g className="portfolio-y-axis" aria-hidden="true">
-      <line
-        x1={margin.left}
-        x2={margin.left}
-        y1={axisY}
-        y2={margin.top}
-        stroke="currentColor"
-        strokeWidth={1}
-        opacity={0.35}
-      />
-      {yTickLabels.map((label, i) => {
-        const y = yScale(yTickValues[i]);
-        return (
-          <g key={label} transform={`translate(${margin.left}, ${y}) rotate(-90)`}>
-            <text
-              x={0}
-              y={-10} // Group is already at tick y; local text y must be 0.
-              dominantBaseline="middle"
-              textAnchor="start"
-              fill="currentColor"
-              opacity={0.65}
-              fontSize={12}
-            >
-              {label}
-            </text>
-          </g>
-        );
-      })}
-      <text x={margin.left} y={margin.top-10} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={12}>
-        difficulty
-      </text>
-    </g>
-  )
+  const yAxis = <AxisLeft yScale={yScale} yTickLabels={yTickLabels} yTickValues={yTickValues} margin={margin} axisY={axisY} />;
 
   const projectData = projects.projects;
 

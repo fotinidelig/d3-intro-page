@@ -2,33 +2,123 @@
   "projects": [
     {
       "name": "Exploring Gapminder Data",
+      "id": "gapminder-scatter",
+      "spoiler": "gapminder-scatter-spoiler.png",
       "date": "2026-04-15",
-      "description": "Exploring Gapminder Data with D3.js and React",
-      "difficulty": 20,
-      "duration": "3",
-      "code": "github.com/fotini-deligiannaki/simple-scatter-gapminder",
-      "demo": "https://fotinidelig.github.io/simple-scatter-gapminder/",
-      "commits": "3"
-    },
-    {
-      "name": "Reproducing a basic barplot",
-      "date": "2026-04-01",
-      "description": "Reproducing a basic barplot with D3.js and React, afterwards correcting it.",
-      "difficulty": 10,
-      "duration": "1",
-      "code": "github.com/fotini-deligiannaki/bars-reproduced",
-      "demo": "https://fotinidelig.github.io/bars-reproduced/",
-      "commits": "5"
+      "description": "A reproduction of the Gapminder scatter plot with D3.js and React",
+      "tool": "D3.js",
+      "category": "static",
+      "data": "https://github.com/fotinidelig/simple-scatter-gapminder/blob/main/src/data.jsx",
+      "code": "https://github.com/fotinidelig/simple-scatter-gapminder",
+      "demo": "https://fotinidelig.github.io/simple-scatter-gapminder/"
     },
     {
       "name": "A variation on Barplots",
+      "id": "barplots-variation",
+      "spoiler": "barplots-variation-spoiler.png",
       "date": "2026-05-15",
-      "description": "Simple barplots on student number of the D3 module & variations",
-      "difficulty": 20,
-      "duration": "3",
-      "code": "github.com/fotini-deligiannaki/first-d3-plots",
-      "demo": "https://fotinidelig.github.io/first-d3-plots/",
-      "commits": "10"
+      "description": "Simple barplots on student number from the D3 course (https://www.react-graph-gallery.com/react-d3-dataviz-course)",
+      "tool": "D3.js",
+      "category": "animated",
+      "data": "https://github.com/fotinidelig/first-d3-plots/blob/main/src/student_data.js",
+      "code": "https://github.com/fotinidelig/first-d3-plots",
+      "demo": "https://fotinidelig.github.io/first-d3-plots/"
+    },
+    {
+      "name": "Energy Dashboard",
+      "id": "energy-dashboard",
+      "spoiler": "energy-dashboard-spoiler.png",
+      "date": "2026-06-10",
+      "description": "Energy Dashboard showing the energy usage of different countries",
+      "data": "https://github.com/owid/energy-data",
+      "tool": "D3.js",
+      "category": "interactive/web",
+      "code": "https://github.com/fotinidelig/energy-dashboard",
+      "demo": "https://fotinidelig.github.io/energy-dashboard/"
+    },
+    {
+      "name": "Natura 2000 web application",
+      "id": "natura2000-web-app",
+      "spoiler": "natura2000-web-app-spoiler.png",
+      "date": "2026-02-30",
+      "description": "A web application for the Natura 2000 database in form of story-telling.",
+      "tool": "Plotly",
+      "category": "interactive/web",
+      "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
+      "code": "https://github.com/fotinidelig/natura2000-interactive",
+      "demo": "hhttps://natura2000-viz.up.railway.app/"
+    },
+    {
+      "name": "Natura 2000 lolipop plot",
+      "id": "natura2000-lolipop",
+      "spoiler": "natura2000-lolipop-spoiler.png",
+      "date": "2026-01-15",
+      "description": "Lolipop plot showing Natura2000 sites and species count across Europe with annotations.",
+      "tool": "Matplotlib, Affinity Designer",
+      "category": "static",
+      "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/natura2000",
+      "demo": ""
+    },
+    {
+      "name": "Natura 2000 radial plot",
+      "id": "natura2000-radial",
+      "spoiler": "natura2000-radial-spoiler.png",
+      "date": "2026-01-01",
+      "description": "Radial plot showing Natura2000 sites and species count across Europe.",
+      "tool": "Matplotlib, Affinity Designer",
+      "category": "static",
+      "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/natura2000",
+      "demo": ""
+    },
+    {
+      "name": "Temperatures in Greece",
+      "id": "temperatures-greece",
+      "spoiler": "temperatures-greece-spoiler.png",
+      "date": "2025-12-1",
+      "description": "A visualization of the temperatures in Greece between 2011 and 2024.",
+      "tool": "Matplotlib",
+      "category": "static",
+      "data": "https://cds.climate.copernicus.eu/datasets/insitu-gridded-observations-europe?tab=overview",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/temperature-viz",
+      "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/temperature-viz/greece_temperatures.svg"
+    },
+    {
+      "name": "Temperatures in Greece - polar animated version",
+      "id": "temperatures-greece-polar-animated",
+      "spoiler": "temperatures-greece-polar-animated-spoiler.svg",
+      "date": "2025-12-30",
+      "description": "A visualization of the temperatures in Greece between 2011 and 2024 as a polar and animated plot.",
+      "tool": "Matplotlib",
+      "category": "animated",
+      "data": "https://cds.climate.copernicus.eu/datasets/insitu-gridded-observations-europe?tab=overview",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/temperature-viz",
+      "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/temperature-viz/polar_anim_combined_legend.gif"
+    },
+    {
+      "name": "Fire data in Europe (animated)",
+      "id": "fire-data-europe-animated",
+      "spoiler": "fire-data-europe-animated-spoiler.png",
+      "date": "2025-12-15",
+      "description": "A map animation of the fire incidents in Europe between 2006 and 2023.",
+      "tool": "Matplotlib",
+      "category": "animated",
+      "data": "https://github.com/fotinidelig/graph-gallery/tree/main/src/fire-data-viz/fire-data",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/fire-data-viz",
+      "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/fire-data-viz/web-animation-with-text.gif"
+    },
+    {
+      "name": "Fire data in Europe (line plot",
+      "id": "fire-data-europe-line-plot",
+      "spoiler": "fire-data-europe-line-plot-spoiler.svg",
+      "date": "2025-12-10",
+      "description": "A line plot of the fire incidents in Europe between 2006 and 2023.",
+      "tool": "Matplotlib",
+      "category": "static",
+      "data": "https://github.com/fotinidelig/graph-gallery/tree/main/src/fire-data-viz/fire-data",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/fire-data-viz",
+      "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/fire-data-viz/multi_line_plot.svg"
     }
   ]
 }
