@@ -1,3 +1,5 @@
+@import './theme/typography.css';
+
 *,
 *::before,
 *::after {
@@ -6,11 +8,11 @@
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-body);
   line-height: 1.5;
   color: #1a1a1a;
   background: #fafafa;
-  font-family: 'Offside';
 }
 
 #root {

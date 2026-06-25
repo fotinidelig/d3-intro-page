@@ -1,7 +1,7 @@
 export const toolCategories = [ "Matplotlib", "Plotly", "D3.js"];
 
 export const typesCategoriesColors = {
-    "static": "#FF0000",
-    "animated": "#00FF00",
-    "interactive/web": "#0000FF",
+    "static": "#9182DA",
+    "animated": "#3C6794",
+    "interactive/web": "#88675D",
 };

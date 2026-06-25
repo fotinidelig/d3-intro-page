@@ -1,17 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import * as d3 from 'd3';
 import ProjectBubble from './ProjectBubble';
 import projects from './assets/projects.json';
+import { typesCategoriesColors, toolCategories } from './assets/categories';
+import { Tooltip } from './Tooltip';
+import { ProjectCard } from './ProjectCard';
 import { useDimensions } from './use-dimensions';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
 
+
+function extractToolCategory(tool) {
+  return toolCategories.find(category => tool.includes(category));
+}
+
 export const PortfolioSvg = ({ width, height }) => {
   if (!width || !height) return null;
-  const margin = { top: 30, right: 30, bottom: 45, left: 30 };
 
-  const domainStart = new Date('2026-02-28');
-  const domainEnd = new Date('2026-07-2');
+  const [interactionData, setInteractionData] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const margin = { top: 50, right: 30, bottom: 60, left: 30 };
+
+  const minDate = new Date(d3.min(projects.projects, project => project.date));
+
+  const domainStart = new Date(minDate.setMonth((minDate.getMonth() - 1) % 12));
+  const domainEnd = new Date();
 
   // x-scale: time → horizontal position
   const xScale = d3
@@ -19,40 +33,20 @@ export const PortfolioSvg = ({ width, height }) => {
     .domain([domainStart, domainEnd])
     .range([margin.left, width - margin.right]);
 
-  const pixelsPerTick = 150;
+  const pixelsPerTick = 140;
   const numberOfTicksTarget = Math.floor(width / pixelsPerTick);
   const xTicks = xScale.ticks(numberOfTicksTarget);
   const formatMonth = d3.timeFormat('%b %Y');
 
   // y-scale expresses project difficulty/complexity
   const yScale = d3.scaleLinear()
-    .domain([0, 100])
-    .range([height - margin.bottom, margin.top]);
+    .domain([0, toolCategories.length - 1])
+    .range([height - margin.bottom, margin.top + 50]);
 
-  const yTickLabels = ['easy', 'ok', 'hard'];
-  const yTickValues = [0, 49,93];
+  const yTickLabels = toolCategories;
+  const yTickValues = toolCategories.map((category, index) => index);
 
-  // const yTicks = Object.keys(yTickLabels).map((key) => yScale(parseInt(key)));
   const axisY = height - margin.bottom + 20;
-
-  const maxDuration = d3.max(projects.projects, (project) => parseInt(project.duration));
-  const minDuration = d3.min(projects.projects, (project) => parseInt(project.duration));
-
-  // Make bubble radii responsive: current values are the max at "full" size,
-  // and scale down proportionally on smaller viewports.
-  const BASE_W = 1100;
-  const BASE_H = 700;
-  const scale = Math.max(0.55, Math.min(1, Math.min(width / BASE_W, height / BASE_H)));
-
-  const durationScale = d3.scaleSqrt()
-    .domain([minDuration, maxDuration])
-    .range([20 * scale, 50 * scale]);
-
-  const maxLines = d3.max(projects.projects, (project) => parseInt(project.lines));
-  const minLines = d3.min(projects.projects, (project) => parseInt(project.lines));
-  // const linesScale = d3.scaleSqrt()
-  //   .domain([minLines, maxLines])
-  //   .range([0.3, 0.8]);
 
   const xAxis = 
   <AxisBottom 
@@ -69,47 +63,71 @@ export const PortfolioSvg = ({ width, height }) => {
   const projectData = projects.projects;
 
   return (
-    <svg
-      className="app-svg"
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="xMidYMid meet"
-      role="img"
-      aria-label="Project canvas"
-      overflow="visible"
-    >
-      <title>Portfolio Projects</title>
-      <rect
-        x={0}
-        y={0}
-        width={width}
-        height={height}
-        fill="#f9c6c6"
-        opacity={0.2}
-      />
-      <text 
-      x={width-margin.right} 
-      y={yScale(100)} 
-      fill="currentColor" 
-      opacity="0.5" 
-      fontSize="20" 
-      fontWeight="bold"
-      textAnchor="end"
+    <div style={{ position: "relative" }}>
+      <svg
+        className="app-svg"
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="xMidYMid meet"
+        role="img"
+        aria-label="Project canvas"
+        overflow="visible"
       >
-        Projects by chronology &amp; difficulty
-      </text>
-      {xAxis}
-      {yAxis}
-      {projectData.map((project) => (
-        <ProjectBubble 
-          x={xScale(new Date(project.date))} 
-          y={yScale(project.difficulty)} 
-          radius={durationScale(parseInt(project.duration))} 
-          color="#128c65" 
-          // opacity={linesScale(parseInt(project.lines))} 
-          opacity={0.9}
-          project={project} />
-      ))}
-    </svg>
+        <rect
+          className="app-svg__background"
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+        />
+        {xAxis}
+        {yAxis}
+        {projectData.map((project) => {
+          const y = toolCategories.indexOf(extractToolCategory(project.tool));
+          
+          return <ProjectBubble 
+            x={xScale(new Date(project.date))} 
+            y={yScale(y)} 
+            radius={15} 
+            color={typesCategoriesColors[project.category]} 
+            opacity={0.9}
+            project={project} 
+            onMouseEnter={() =>
+              setInteractionData({
+                xPos: xScale(new Date(project.date)),
+                yPos: yScale(y),
+                name: project.name,
+                date: new Date(project.date).toLocaleDateString(),
+                data: project.data,
+                tool: project.tool,
+                demo: project.demo,  
+                category: project.category,
+                width: width,
+              })
+            }
+            onMouseLeave={() => setInteractionData(null)}
+            onClick={() => setSelectedProject(project)}
+            />;
+        })}
+      </svg>
+      <div
+        style={{
+          position: "absolute",
+          width,
+          height,
+          top: 0,
+          left: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <Tooltip interactionData={interactionData} />
+      </div>
+      {selectedProject ? (
+        <ProjectCard
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      ) : null}
+    </div>
   )
 };
 

@@ -1,20 +1,41 @@
-import React from 'react';
+import { useState } from 'react';
 
-export default function ProjectBubble({x, y, radius, color, opacity, project}) {
+export default function ProjectBubble({
+  x,
+  y,
+  radius,
+  color,
+  opacity,
+  onMouseEnter,
+  onMouseLeave,
+  onClick,
+}) {
+  const [hovered, setHovered] = useState(false);
 
   const style = {
     fill: color,
-    opacity: opacity,
+    opacity,
     cursor: 'pointer',
     stroke: 'white',
-    strokeWidth: '5',
-  }
+    strokeWidth: 4,
+    transition: 'r 0.05s ease',
+  };
 
   return (
-    <a href={project.demo} target="_blank" rel="noopener noreferrer">
-      <g>
-          <circle style={style} key={project.name} cx={x} cy={y} r={radius}/>
-      </g>
-    </a>
+    <circle
+      cx={x}
+      cy={y}
+      r={hovered ? radius * 1.15 : radius}
+      style={style}
+      onMouseEnter={(e) => {
+        setHovered(true);
+        onMouseEnter?.(e);
+      }}
+      onMouseLeave={(e) => {
+        setHovered(false);
+        onMouseLeave?.(e);
+      }}
+      onClick={onClick}
+    />
   );
 }

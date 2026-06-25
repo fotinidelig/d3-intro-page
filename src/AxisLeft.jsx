@@ -1,3 +1,5 @@
+import { fontSize, fontType } from './theme/typography.js';
+
 export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, axisY }) => {
     return (
     <g className="portfolio-y-axis" aria-hidden="true">
@@ -7,8 +9,8 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, axisY }) =>
         y1={axisY}
         y2={margin.top}
         stroke="currentColor"
-        strokeWidth={1}
-        opacity={0.35}
+        strokeWidth={2}
+        opacity={0.8}
       />
       {yTickLabels.map((label, i) => {
         const y = yScale(yTickValues[i]);
@@ -20,16 +22,16 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, axisY }) =>
               dominantBaseline="middle"
               textAnchor="start"
               fill="currentColor"
-              opacity={0.65}
-              fontSize={12}
+              opacity={1}
+              style={{ fontFamily: fontType.monospace, fontSize: fontSize.axis }}
             >
               {label}
             </text>
           </g>
         );
       })}
-      <text x={margin.left} y={margin.top-10} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={12}>
-        difficulty
+      <text x={margin.left} y={margin.top-10} textAnchor="middle" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
+        tool
       </text>
     </g>
   );
