@@ -35,13 +35,22 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) =>
           </g>
         );
       })}
-      {/* {midpoints.map((value, i) => {
+      {yTickValues.map((value, i) => {
         return (
-          <g key={i} transform={`translate(${margin.left}, ${yScale(yTickValues[i])})`}>
-            <line x1={0} x2={width-margin.right} y1={value} y2={value} stroke="currentColor" strokeWidth={2} opacity={0.3} />
+          <g key={i} transform={`translate(${margin.left}, ${yScale(value)})`}>
+            <line 
+            x1={10} 
+            x2={width-margin.right-margin.left} 
+            y1={0} 
+            y2={0} 
+            stroke="currentColor" 
+            strokeWidth={1} 
+            strokeDasharray="6 4"
+            opacity={0.3} 
+            />
           </g>
         );
-      })} */}
+      })}
       <text x={0} y={margin.top-10} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
         tool
       </text>

@@ -85,8 +85,8 @@ export const PortfolioSvg = ({ width, height }) => {
   const legendHeight = legendLabels.length * fontSize.axis * 0.65;
   const legend = 
   <Legend 
-    x={width-margin.right-20} 
-    y={margin.top} 
+    x={width-margin.right} 
+    y={margin.top+20} 
     height={legendHeight}
     labels={legendLabels} 
     colors={Object.values(typesCategoriesColors)}
