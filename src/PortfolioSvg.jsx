@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import * as d3 from 'd3';
 import ProjectBubble from './ProjectBubble';
 import projects from './assets/projects.json';
@@ -6,9 +6,12 @@ import { typesCategoriesColors, toolCategories } from './assets/categories';
 import { Tooltip } from './Tooltip';
 import { ProjectCard } from './ProjectCard';
 import { useDimensions } from './use-dimensions';
+import { fontSize } from './theme/typography';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
+import { Legend } from './Legend';
 
+const JITTER_WIDTH = .3;
 
 function extractToolCategory(tool) {
   return toolCategories.find(category => tool.includes(category));
@@ -19,6 +22,9 @@ export const PortfolioSvg = ({ width, height }) => {
 
   const [interactionData, setInteractionData] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [highlightedType, setHighlightedType] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState(null);
+  const [hoveredType, setHoveredType] = useState(null);
 
   const margin = { top: 50, right: 30, bottom: 60, left: 30 };
 
@@ -26,6 +32,13 @@ export const PortfolioSvg = ({ width, height }) => {
 
   const domainStart = new Date(minDate.setMonth((minDate.getMonth() - 1) % 12));
   const domainEnd = new Date();
+
+  const projectsWithJitter = useMemo(() => projects.projects.map((project) => {
+    return {
+      ...project,
+      y: toolCategories.indexOf(extractToolCategory(project.tool)) + (Math.random()-0.5) * JITTER_WIDTH,
+    };
+  }), [projects.projects]);
 
   // x-scale: time → horizontal position
   const xScale = d3
@@ -58,20 +71,39 @@ export const PortfolioSvg = ({ width, height }) => {
     width={width} 
   />;
 
-  const yAxis = <AxisLeft yScale={yScale} yTickLabels={yTickLabels} yTickValues={yTickValues} margin={margin} axisY={axisY} />;
+  const yAxis = 
+  <AxisLeft 
+  yScale={yScale} 
+  yTickLabels={yTickLabels} 
+  yTickValues={yTickValues} 
+  margin={margin} 
+  width={width} 
+  />;
 
-  const projectData = projects.projects;
+  const projectData = projectsWithJitter;
+  const legendLabels = Object.keys(typesCategoriesColors);
+  const legendHeight = legendLabels.length * fontSize.axis * 0.65;
+  const legend = 
+  <Legend 
+    x={width-margin.right-20} 
+    y={margin.top} 
+    height={legendHeight}
+    labels={legendLabels} 
+    colors={Object.values(typesCategoriesColors)}
+    hoveredType={hoveredType}
+    />;
 
   return (
     <div style={{ position: "relative" }}>
       <svg
         className="app-svg"
-        viewBox={`0 0 ${width} ${height}`}
+        width={width} height={height}
         preserveAspectRatio="xMidYMid meet"
         role="img"
         aria-label="Project canvas"
         overflow="visible"
       >
+        {legend}
         <rect
           className="app-svg__background"
           x={0}
@@ -82,30 +114,42 @@ export const PortfolioSvg = ({ width, height }) => {
         {xAxis}
         {yAxis}
         {projectData.map((project) => {
-          const y = toolCategories.indexOf(extractToolCategory(project.tool));
+          const y = yScale(project.y);
           
           return <ProjectBubble 
             x={xScale(new Date(project.date))} 
-            y={yScale(y)} 
+            y={y} 
             radius={15} 
             color={typesCategoriesColors[project.category]} 
-            opacity={0.9}
             project={project} 
-            onMouseEnter={() =>
+            onMouseEnter={() => {
+              setHoveredType(project.category);
+              setHoveredProject(project);
+              setHighlightedType(project.category);
               setInteractionData({
                 xPos: xScale(new Date(project.date)),
-                yPos: yScale(y),
+                yPos: y,
                 name: project.name,
                 date: new Date(project.date).toLocaleDateString(),
                 data: project.data,
                 tool: project.tool,
-                demo: project.demo,  
+                demo: project.demo,
                 category: project.category,
-                width: width,
+                color: typesCategoriesColors[project.category],
+                width,
               })
+            }}
+            onMouseLeave={
+              () => {
+                setHoveredProject(null);
+                setInteractionData(null);
+                setHighlightedType(null);
+                setHoveredType(null);
+              }
             }
-            onMouseLeave={() => setInteractionData(null)}
             onClick={() => setSelectedProject(project)}
+            hoveredProject={hoveredProject}
+            highlighted={highlightedType === project.category || hoveredProject === project}
             />;
         })}
       </svg>

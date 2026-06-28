@@ -1,9 +1,14 @@
 import { fontSize, fontType } from './theme/typography.js';
 
-export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, axisY }) => {
+export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) => {
+  const tickHeight = yScale(1) - yScale(0);
+    const midpoints = yTickValues.slice(0, -1).map((value, i) => {  
+        return (value+tickHeight/2);
+    });
+
     return (
     <g className="portfolio-y-axis" aria-hidden="true">
-      <line
+      {/* <line
         x1={margin.left}
         x2={margin.left}
         y1={axisY}
@@ -11,16 +16,16 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, axisY }) =>
         stroke="currentColor"
         strokeWidth={2}
         opacity={0.8}
-      />
+      /> */}
       {yTickLabels.map((label, i) => {
         const y = yScale(yTickValues[i]);
         return (
-          <g key={label} transform={`translate(${margin.left}, ${y}) rotate(-90)`}>
+          <g key={label} transform={`translate(${margin.left}, ${y})`}>
             <text
               x={0}
-              y={-10} // Group is already at tick y; local text y must be 0.
+              y={0} // Group is already at tick y; local text y must be 0.
               dominantBaseline="middle"
-              textAnchor="start"
+              textAnchor="end"
               fill="currentColor"
               opacity={1}
               style={{ fontFamily: fontType.monospace, fontSize: fontSize.axis }}
@@ -30,7 +35,14 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, axisY }) =>
           </g>
         );
       })}
-      <text x={margin.left} y={margin.top-10} textAnchor="middle" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
+      {/* {midpoints.map((value, i) => {
+        return (
+          <g key={i} transform={`translate(${margin.left}, ${yScale(yTickValues[i])})`}>
+            <line x1={0} x2={width-margin.right} y1={value} y2={value} stroke="currentColor" strokeWidth={2} opacity={0.3} />
+          </g>
+        );
+      })} */}
+      <text x={0} y={margin.top-10} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
         tool
       </text>
     </g>

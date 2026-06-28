@@ -5,34 +5,33 @@ export default function ProjectBubble({
   y,
   radius,
   color,
-  opacity,
   onMouseEnter,
   onMouseLeave,
   onClick,
+  hoveredProject,
+  highlighted,
 }) {
-  const [hovered, setHovered] = useState(false);
 
   const style = {
     fill: color,
-    opacity,
     cursor: 'pointer',
     stroke: 'white',
     strokeWidth: 4,
-    transition: 'r 0.05s ease',
+    transition: 'all 0.05s ease',
+    fillOpacity: highlighted ? 1 : hoveredProject ? .4 : .8,
+    opacity: highlighted ? 1 : hoveredProject ? .4 : .8,
   };
 
   return (
     <circle
       cx={x}
       cy={y}
-      r={hovered ? radius * 1.15 : radius}
+      r={highlighted ? radius * 1.15 : radius}
       style={style}
       onMouseEnter={(e) => {
-        setHovered(true);
         onMouseEnter?.(e);
       }}
       onMouseLeave={(e) => {
-        setHovered(false);
         onMouseLeave?.(e);
       }}
       onClick={onClick}
