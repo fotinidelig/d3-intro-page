@@ -1,5 +1,6 @@
 import './App.css'
 import { ResponsivePortfolioSvg } from './PortfolioSvg.jsx'
+import profilPic from './assets/profil_pic.jpg'
 
 function App() {
   return (
@@ -7,7 +8,7 @@ function App() {
       <main className="app-main">
         <aside className="app-profile" aria-label="About">
           <div className="app-avatar" role="img" aria-label="Profile picture placeholder" >
-            <img src="src/assets/profil_pic.jpg" alt="Profile picture" />
+            <img src={profilPic} alt="Profile picture" />
             </div>
           <h1 className="app-title">Hi, it's Fotini.</h1>
           <p className="app-bio" style={{ textAlign: 'center', color: 'black' }}>
