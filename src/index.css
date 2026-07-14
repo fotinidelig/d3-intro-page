@@ -1,4 +1,5 @@
 @import './theme/typography.css';
+@import "tailwindcss";
 
 *,
 *::before,

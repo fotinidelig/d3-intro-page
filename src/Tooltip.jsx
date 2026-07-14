@@ -14,9 +14,12 @@ export const Tooltip = ({ interactionData }) => {
     }
   
     const { xPos, yPos, name, date, data, tool, demo, category, color, width } = interactionData;
-    
+
     const flip = xPos >= width / 2;
-    const transformX = flip ? 'translateX(-110%)' : 'translateX(10%)';
+    const bubbleOffset = 30; // bubble radius (~15) + gap
+    const transformX = flip
+      ? `translateX(calc(-100% - ${bubbleOffset}px))`
+      : `translateX(${bubbleOffset}px)`;
     return (    
       <div
         className={`tooltip${flip ? ' tooltip--flip' : ''}`}

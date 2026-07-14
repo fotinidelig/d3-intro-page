@@ -46,7 +46,7 @@
       "category": "interactive/web",
       "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
       "code": "https://github.com/fotinidelig/natura2000-interactive",
-      "demo": "hhttps://natura2000-viz.up.railway.app/"
+      "demo": "hhttps://natura2000-viz.up.railway.app"
     },
     {
       "name": "Natura 2000 lolipop plot",
@@ -58,7 +58,7 @@
       "category": "static",
       "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
       "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/natura2000",
-      "demo": ""
+      "demo": "https://raw.githubusercontent.com/fotinidelig/graph-gallery/refs/heads/main/src/natura2000/natura2000_lolipop_affinity.png"
     },
     {
       "name": "Natura 2000 radial plot",
@@ -70,7 +70,7 @@
       "category": "static",
       "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
       "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/natura2000",
-      "demo": ""
+      "demo": "https://raw.githubusercontent.com/fotinidelig/graph-gallery/refs/heads/main/src/natura2000/natura2000_polarbar.png"
     },
     {
       "name": "Temperatures in Greece",
@@ -119,6 +119,18 @@
       "data": "https://github.com/fotinidelig/graph-gallery/tree/main/src/fire-data-viz/fire-data",
       "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/fire-data-viz",
       "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/fire-data-viz/multi_line_plot.svg"
+    },
+    {
+      "name": "ELSTAT unemployment rates",
+      "id": "elstat-unemployment-rates",
+      "spoiler": "elstat_unemployment_rates_spoiler.png",
+      "date": "2026-07-10",
+      "description": "A reproduction of the ELSTAT unemployment rates plot (for original see pg. 2 in the [official publication](https://www.statistics.gr/el/statistics?p_p_id=documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=column-2&p_p_col_count=4&p_p_col_pos=1&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_javax.faces.resource=document&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_ln=downloadResources&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_documentID=596257&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_locale=el)).",
+      "tool": "Matplotlib",
+      "category": "static",
+      "data": "https://www.statistics.gr/el/statistics/-/publication/SJO02/-",
+      "code": "https://github.com/fotinidelig/elstat_graphs",
+      "demo": "https://github.com/fotinidelig/elstat_graphs/blob/main/src/unemployment_rate.png"
     }
   ]
 }

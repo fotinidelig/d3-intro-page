@@ -16,7 +16,7 @@ export const Legend = ({ x, y, height, labels, colors, hoveredType }) => {
                     y={yScale(label)} 
                     textAnchor="end" 
                     dominantBaseline="middle" 
-                    fontSize={fontSize.axis}
+                    fontSize={fontSize.annotation}
                     fill='currentColor'
                     opacity={opacity}
                     style={{ fontFamily: fontType.monospace }}

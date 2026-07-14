@@ -22,7 +22,6 @@ export const PortfolioSvg = ({ width, height }) => {
 
   const [interactionData, setInteractionData] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [highlightedType, setHighlightedType] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
   const [hoveredType, setHoveredType] = useState(null);
 
@@ -48,7 +47,7 @@ export const PortfolioSvg = ({ width, height }) => {
 
   const pixelsPerTick = 140;
   const numberOfTicksTarget = Math.floor(width / pixelsPerTick);
-  const xTicks = xScale.ticks(numberOfTicksTarget);
+  const xTicks = xScale.ticks(numberOfTicksTarget).slice(1);
   const formatMonth = d3.timeFormat('%b %Y');
 
   // y-scale expresses project difficulty/complexity
@@ -69,6 +68,7 @@ export const PortfolioSvg = ({ width, height }) => {
     formatMonth={formatMonth} 
     margin={margin} 
     width={width} 
+    height={height}
   />;
 
   const yAxis = 
@@ -78,11 +78,12 @@ export const PortfolioSvg = ({ width, height }) => {
   yTickValues={yTickValues} 
   margin={margin} 
   width={width} 
+  height={height}
   />;
 
   const projectData = projectsWithJitter;
   const legendLabels = Object.keys(typesCategoriesColors);
-  const legendHeight = legendLabels.length * fontSize.axis * 0.65;
+  const legendHeight = legendLabels.length * fontSize.annotation * 0.65;
   const legend = 
   <Legend 
     x={width-margin.right} 
@@ -125,7 +126,6 @@ export const PortfolioSvg = ({ width, height }) => {
             onMouseEnter={() => {
               setHoveredType(project.category);
               setHoveredProject(project);
-              setHighlightedType(project.category);
               setInteractionData({
                 xPos: xScale(new Date(project.date)),
                 yPos: y,
@@ -143,13 +143,12 @@ export const PortfolioSvg = ({ width, height }) => {
               () => {
                 setHoveredProject(null);
                 setInteractionData(null);
-                setHighlightedType(null);
                 setHoveredType(null);
               }
             }
             onClick={() => setSelectedProject(project)}
             hoveredProject={hoveredProject}
-            highlighted={highlightedType === project.category || hoveredProject === project}
+            highlighted={ hoveredProject === project}
             />;
         })}
       </svg>

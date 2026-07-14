@@ -51,7 +51,7 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) =>
           </g>
         );
       })}
-      <text x={0} y={margin.top-10} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
+      <text x={0} y={margin.top} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
         tool
       </text>
     </g>

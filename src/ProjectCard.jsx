@@ -1,5 +1,14 @@
+import {
+  animate,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+} from "motion/react";
+
+import { twMerge } from "tailwind-merge";
+
 import { useEffect, useState } from 'react';
-import { typesCategoriesColors } from './assets/categories';
+import { typesCategoriesColors, categoryColorGradients } from './assets/categories';
 import './ProjectCard.css';
 
 const spoilerImages = import.meta.glob('./assets/**/*.{png,svg,jpg,jpeg,webp}', {
@@ -40,11 +49,102 @@ function LinkRow({ label, href }) {
   );
 }
 
+const INLINE_LINK = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+function ProjectDescription({ text }) {
+  if (!text) return null;
+
+  const parts = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(INLINE_LINK)) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    parts.push(
+      <a
+        key={match.index}
+        className="project-card__description-link"
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {match[1]}
+      </a>,
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return <p className="project-card__description">{parts}</p>;
+}
+
 function clampAspectRatio(ratio) {
   const min = 0.7;
   const max = 2.4;
   return Math.min(max, Math.max(min, ratio));
 }
+
+const AIGradientBorder = ({
+  children,
+  className,
+  category,
+  borderWidth = 3,
+  duration = 8,
+}) => {
+  const turn = useMotionValue(0);
+
+  useEffect(() => {
+    animate(turn, 1, {
+      ease: "linear",
+      duration,
+      repeat: Infinity,
+    });
+  }, [duration, turn]);
+
+  const [black, dark, primary, light, white] =
+    categoryColorGradients[category] ??
+    ['#000000', '#49416d', '#9182da', '#c2abde', '#F2D4E1'];
+
+  // Symmetrical stops in ascending order — peaks at white, fades to transparent
+  const gradient = useMotionTemplate`conic-gradient(from ${turn}turn,
+    transparent 0%,
+    ${black} 6%,
+    ${dark} 16%,
+    ${primary} 28%,
+    ${light} 38%,
+    ${white} 45%,
+    ${light} 52%,
+    ${primary} 58%,
+    ${dark} 66%,
+    ${black} 74%,
+    transparent 82%,
+    transparent 100%)`;
+
+  return (
+    <div
+      className={twMerge("relative", className)}
+      style={{ padding: borderWidth }}
+    >
+      <motion.div
+        style={{ backgroundImage: gradient }}
+        className="absolute inset-0 rounded-[inherit]"
+      />
+
+      <div className="relative rounded-[inherit] overflow-hidden">
+        <div className="relative">{children}</div>
+
+        <motion.div
+          style={{ backgroundImage: gradient }}
+          className="ai-glow-spill-mask opacity-70 blur-2xl pointer-events-none absolute inset-[-60%] z-10 overflow-hidden"
+        ></motion.div>
+      </div>
+    </div>
+  );
+};
 
 export function ProjectCard({ project, onClose }) {
   const [aspectRatio, setAspectRatio] = useState(16 / 10);
@@ -70,9 +170,15 @@ export function ProjectCard({ project, onClose }) {
 
   return (
     <div
+      key={project.id}
       className="project-card-backdrop"
       onClick={onClose}
       role="presentation"
+    >    
+    <AIGradientBorder
+      category={project.category}
+      borderWidth={5}
+      className="mx-auto w-full max-w-lg rounded-4xl"
     >
       <article
         className="project-card"
@@ -118,7 +224,7 @@ export function ProjectCard({ project, onClose }) {
           </h2>
           <hr className="project-card__rule" />
 
-          <p className="project-card__description">{project.description}</p>
+          <ProjectDescription text={project.description} />
 
           <dl className="project-card__meta">
             <div className="project-card__meta-row">
@@ -142,6 +248,7 @@ export function ProjectCard({ project, onClose }) {
           </div>
         </div>
       </article>
+      </AIGradientBorder>
     </div>
   );
 }

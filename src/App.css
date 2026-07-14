@@ -3,10 +3,13 @@
   flex-direction: column;
   height: 100vh;
   min-height: 100vh;
+  background: linear-gradient(-45deg, #FFF2F250 0%, #FFD7C650 13%, #FFC9B050 25%, #FFBB9950 38%, #D5BD9C50 50%, #ABBE9E50 62%, #57c0a250 75%, #f3a46950 87%, #FFF2F250 100%);
+  background-size:  400% 400%;
+  animation: gradient 20s ease infinite;
 }
 
 .app-main {
-  flex: 0 0 92%;
+  flex: 0 0 90%;
   display: grid;
   grid-template-columns: 1fr 3fr;
   min-height: 0;
@@ -15,11 +18,23 @@
 .app-profile {
   padding: 1.5rem;
   /* border-right: 1px solid #e8e8e8; */
-  background-color: #f9c6c648;
+  /* background-color: #fff2f2; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
 }
 
 .app-avatar img {
@@ -49,7 +64,7 @@
   align-items: center;
   padding: 0rem;
   color: #128c65;
-  background-color: #f9c6c648;
+  /* background-color: #fff2f2; */
 }
 
 .app-viz {
@@ -61,20 +76,27 @@
 }
 
 .app-footer {
-  flex: 0 0 8%;
+  flex: 0 0 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
-  border-top: 1px solid #e8e8e8;
-  background-color: #f9c6c611;
+  padding: 1rem 1rem;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(18, 140, 101, 0.12) 30%,
+    rgba(18, 140, 101, 0.25) 50%,
+    rgba(255, 242, 242, 0.8) 80%,
+    rgba(255, 242, 242, 1) 100%
+  );
   font-size: 0.8rem;
-  color: #128c658d;
+  color: black;
 }
 
 .app-footer p {
   margin: 0;
+  z-index: 1000;
 }
 
 .app-footer a {
