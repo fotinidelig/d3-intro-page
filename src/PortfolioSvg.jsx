@@ -114,6 +114,12 @@ export const PortfolioSvg = ({ width, height }) => {
         />
         {xAxis}
         {yAxis}
+        <text x={0} y={-30} fontSize={fontSize.subheader} fontWeight="bold" fill='#128c65'>
+          Project exploration </text>
+        <text x={0} y={-10} fontSize={fontSize.annotation} fill='#128c65'>
+          learn more by clicking on the bubbles!
+        </text>
+        
         {projectData.map((project) => {
           const y = yScale(project.y);
           

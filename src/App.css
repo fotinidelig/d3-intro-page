@@ -5,7 +5,7 @@
   min-height: 100vh;
   background: linear-gradient(-45deg, #FFF2F250 0%, #FFD7C650 13%, #FFC9B050 25%, #FFBB9950 38%, #D5BD9C50 50%, #ABBE9E50 62%, #57c0a250 75%, #f3a46950 87%, #FFF2F250 100%);
   background-size:  400% 400%;
-  animation: gradient 20s ease infinite;
+  animation: gradient 10s ease infinite;
 }
 
 .app-main {
