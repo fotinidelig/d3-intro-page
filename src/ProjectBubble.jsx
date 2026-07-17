@@ -10,7 +10,9 @@ export default function ProjectBubble({
   onClick,
   hoveredProject,
   highlighted,
+  hoveredType,
 }) {
+
 
   const style = {
     fill: color,
@@ -18,8 +20,7 @@ export default function ProjectBubble({
     stroke: 'white',
     strokeWidth: 4,
     transition: 'all 0.05s ease',
-    // fillOpacity: highlighted ? 1 : hoveredProject ? .6 : .8,
-    filter: highlighted ? 'saturate(1)' : hoveredProject ? 'saturate(.4)' : 'saturate(.8)',
+    filter: highlighted ? 'saturate(1)' : hoveredProject || hoveredType ? 'saturate(.3)' : 'saturate(.8)',
   };
 
   return (

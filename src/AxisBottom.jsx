@@ -4,7 +4,7 @@ export const AxisBottom = ({ xScale, xTicks, axisY, formatMonth, margin, width, 
 
     const labelsPadding = 18;
     return (
-    <g className="portfolio-x-axis" aria-hidden="true">
+    <g className="portfolio-x-axis" aria-hidden="true" style={{ pointerEvents: 'none' }}>
         {/* <line
           x1={margin.left}
           x2={width - margin.right}

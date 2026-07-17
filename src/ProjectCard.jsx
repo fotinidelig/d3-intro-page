@@ -9,21 +9,13 @@ import { twMerge } from "tailwind-merge";
 
 import { useEffect, useState } from 'react';
 import { typesCategoriesColors, categoryColorGradients } from './assets/categories';
+import {
+  clampAspectRatio,
+  getSpoilerAspectRatio,
+  getSpoilerUrl,
+  preloadSpoiler,
+} from './spoilerImages';
 import './ProjectCard.css';
-
-const spoilerImages = import.meta.glob('./assets/**/*.{png,svg,jpg,jpeg,webp}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-});
-
-export function getSpoilerUrl(filename) {
-  if (!filename) return null;
-  const match = Object.entries(spoilerImages).find(([path]) =>
-    path.endsWith(`/${filename}`),
-  );
-  return match?.[1] ?? `/spoilers/${filename}`;
-}
 
 function formatDate(dateStr) {
   const date = new Date(dateStr);
@@ -80,12 +72,6 @@ function ProjectDescription({ text }) {
   }
 
   return <p className="project-card__description">{parts}</p>;
-}
-
-function clampAspectRatio(ratio) {
-  const min = 0.7;
-  const max = 2.4;
-  return Math.min(max, Math.max(min, ratio));
 }
 
 const AIGradientBorder = ({
@@ -147,12 +133,24 @@ const AIGradientBorder = ({
 };
 
 export function ProjectCard({ project, onClose }) {
-  const [aspectRatio, setAspectRatio] = useState(16 / 10);
+  const spoilerUrl = project ? getSpoilerUrl(project.spoiler) : null;
+  const [aspectRatio, setAspectRatio] = useState(() =>
+    getSpoilerAspectRatio(project?.spoiler),
+  );
+  const [imageReady, setImageReady] = useState(false);
 
   useEffect(() => {
     if (!project) return;
-    setAspectRatio(16 / 10);
-  }, [project?.id]);
+
+    setImageReady(false);
+    setAspectRatio(getSpoilerAspectRatio(project.spoiler));
+
+    if (!spoilerUrl) return;
+
+    preloadSpoiler(spoilerUrl, project.spoiler).then(() => {
+      setAspectRatio(getSpoilerAspectRatio(project.spoiler));
+    });
+  }, [project?.id, project?.spoiler, spoilerUrl]);
 
   useEffect(() => {
     if (!project) return;
@@ -166,7 +164,6 @@ export function ProjectCard({ project, onClose }) {
   if (!project) return null;
 
   const accent = typesCategoriesColors[project.category] ?? '#128c65';
-  const spoilerUrl = getSpoilerUrl(project.spoiler);
 
   return (
     <div
@@ -205,12 +202,22 @@ export function ProjectCard({ project, onClose }) {
             <img
               src={spoilerUrl}
               alt={`Preview of ${project.name}`}
-              className="project-card__image"
+              className={`project-card__image${imageReady ? ' project-card__image--ready' : ''}`}
+              decoding="async"
+              fetchPriority="high"
+              ref={(node) => {
+                if (!node?.complete || !node.naturalWidth) return;
+                setAspectRatio(
+                  clampAspectRatio(node.naturalWidth / node.naturalHeight),
+                );
+                setImageReady(true);
+              }}
               onLoad={(e) => {
                 const { naturalWidth, naturalHeight } = e.currentTarget;
                 if (naturalWidth && naturalHeight) {
                   setAspectRatio(clampAspectRatio(naturalWidth / naturalHeight));
                 }
+                setImageReady(true);
               }}
             />
           ) : (

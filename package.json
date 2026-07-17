@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "convert-spoilers": "bash scripts/convert-spoilers.sh",
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {

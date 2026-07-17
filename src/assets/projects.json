@@ -3,7 +3,7 @@
     {
       "name": "Exploring Gapminder Data",
       "id": "gapminder-scatter",
-      "spoiler": "gapminder-scatter-spoiler.png",
+      "spoiler": "gapminder-scatter-spoiler.webp",
       "date": "2026-04-15",
       "description": "A reproduction of the Gapminder scatter plot with D3.js and React",
       "tool": "D3.js",
@@ -15,7 +15,7 @@
     {
       "name": "A variation on Barplots",
       "id": "barplots-variation",
-      "spoiler": "barplots-variation-spoiler.png",
+      "spoiler": "barplots-variation-spoiler.webp",
       "date": "2026-05-15",
       "description": "Simple barplots on student number from the D3 course (https://www.react-graph-gallery.com/react-d3-dataviz-course)",
       "tool": "D3.js",
@@ -27,7 +27,7 @@
     {
       "name": "Energy Dashboard",
       "id": "energy-dashboard",
-      "spoiler": "energy-dashboard-spoiler.png",
+      "spoiler": "energy-dashboard-spoiler.webp",
       "date": "2026-06-10",
       "description": "Energy Dashboard showing the energy usage of different countries",
       "data": "https://github.com/owid/energy-data",
@@ -39,19 +39,19 @@
     {
       "name": "Natura 2000 web application",
       "id": "natura2000-web-app",
-      "spoiler": "natura2000-web-app-spoiler.png",
+      "spoiler": "natura2000-web-app-spoiler.webp",
       "date": "2026-02-30",
       "description": "A web application for the Natura 2000 database in form of story-telling.",
       "tool": "Plotly",
       "category": "interactive/web",
       "data": "https://www.eea.europa.eu/en/datahub/datahubitem-view/6fc8ad2d-195d-40f4-bdec-576e7d1268e4",
       "code": "https://github.com/fotinidelig/natura2000-interactive",
-      "demo": "hhttps://natura2000-viz.up.railway.app"
+      "demo": "https://natura2000-viz.up.railway.app"
     },
     {
       "name": "Natura 2000 lolipop plot",
       "id": "natura2000-lolipop",
-      "spoiler": "natura2000-lolipop-spoiler.png",
+      "spoiler": "natura2000-lolipop-spoiler.webp",
       "date": "2026-01-15",
       "description": "Lolipop plot showing Natura2000 sites and species count across Europe with annotations.",
       "tool": "Matplotlib, Affinity Designer",
@@ -63,7 +63,7 @@
     {
       "name": "Natura 2000 radial plot",
       "id": "natura2000-radial",
-      "spoiler": "natura2000-radial-spoiler.png",
+      "spoiler": "natura2000-radial-spoiler.webp",
       "date": "2026-01-01",
       "description": "Radial plot showing Natura2000 sites and species count across Europe.",
       "tool": "Matplotlib, Affinity Designer",
@@ -75,7 +75,7 @@
     {
       "name": "Temperatures in Greece",
       "id": "temperatures-greece",
-      "spoiler": "temperatures-greece-spoiler.png",
+      "spoiler": "temperatures-greece-spoiler.webp",
       "date": "2025-12-1",
       "description": "A visualization of the temperatures in Greece between 2011 and 2024.",
       "tool": "Matplotlib",
@@ -94,12 +94,12 @@
       "category": "animated",
       "data": "https://cds.climate.copernicus.eu/datasets/insitu-gridded-observations-europe?tab=overview",
       "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/temperature-viz",
-      "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/temperature-viz/polar_anim_combined_legend.gif"
+      "demo": "https://byfotini.com/animations/"
     },
     {
       "name": "Fire data in Europe (animated)",
       "id": "fire-data-europe-animated",
-      "spoiler": "fire-data-europe-animated-spoiler.png",
+      "spoiler": "fire-data-europe-animated-spoiler.webp",
       "date": "2025-12-15",
       "description": "A map animation of the fire incidents in Europe between 2006 and 2023.",
       "tool": "Matplotlib",
@@ -123,7 +123,7 @@
     {
       "name": "ELSTAT unemployment rates",
       "id": "elstat-unemployment-rates",
-      "spoiler": "elstat_unemployment_rates_spoiler.png",
+      "spoiler": "elstat_unemployment_rates_spoiler.webp",
       "date": "2026-07-10",
       "description": "A reproduction of the ELSTAT unemployment rates plot (for original see pg. 2 in the [official publication](https://www.statistics.gr/el/statistics?p_p_id=documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage&p_p_col_id=column-2&p_p_col_count=4&p_p_col_pos=1&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_javax.faces.resource=document&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_ln=downloadResources&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_documentID=596257&_documents_WAR_publicationsportlet_INSTANCE_qDQ8fBKKo4lN_locale=el)).",
       "tool": "Matplotlib",

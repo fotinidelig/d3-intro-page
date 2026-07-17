@@ -7,7 +7,7 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) =>
     });
 
     return (
-    <g className="portfolio-y-axis" aria-hidden="true">
+    <g className="portfolio-y-axis" aria-hidden="true" style={{ pointerEvents: 'none' }}>
       {/* <line
         x1={margin.left}
         x2={margin.left}

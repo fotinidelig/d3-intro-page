@@ -1,8 +1,9 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import * as d3 from 'd3';
 import ProjectBubble from './ProjectBubble';
 import projects from './assets/projects.json';
 import { typesCategoriesColors, toolCategories } from './assets/categories';
+import { getSpoilerUrl, preloadSpoiler, preloadAllSpoilers } from './spoilerImages';
 import { Tooltip } from './Tooltip';
 import { ProjectCard } from './ProjectCard';
 import { useDimensions } from './use-dimensions';
@@ -24,6 +25,19 @@ export const PortfolioSvg = ({ width, height }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
   const [hoveredType, setHoveredType] = useState(null);
+
+  useEffect(() => {
+    const schedule = window.requestIdleCallback
+      ? (cb) => window.requestIdleCallback(cb, { timeout: 2000 })
+      : (cb) => window.setTimeout(cb, 300);
+
+    const cancel = window.requestIdleCallback
+      ? (id) => window.cancelIdleCallback(id)
+      : (id) => window.clearTimeout(id);
+
+    const id = schedule(() => preloadAllSpoilers(projects.projects));
+    return () => cancel(id);
+  }, []);
 
   const margin = { top: 50, right: 30, bottom: 60, left: 30 };
 
@@ -83,15 +97,16 @@ export const PortfolioSvg = ({ width, height }) => {
 
   const projectData = projectsWithJitter;
   const legendLabels = Object.keys(typesCategoriesColors);
-  const legendHeight = legendLabels.length * fontSize.annotation * 0.65;
+  const legendHeight = legendLabels.length * fontSize.annotation * 1;
   const legend = 
   <Legend 
     x={width-margin.right} 
-    y={margin.top+20} 
+    y={0} 
     height={legendHeight}
     labels={legendLabels} 
     colors={Object.values(typesCategoriesColors)}
     hoveredType={hoveredType}
+    setHoveredType={setHoveredType}
     />;
 
   return (
@@ -104,13 +119,13 @@ export const PortfolioSvg = ({ width, height }) => {
         aria-label="Project canvas"
         overflow="visible"
       >
-        {legend}
         <rect
           className="app-svg__background"
           x={0}
           y={0}
           width={width}
           height={height}
+          style={{ pointerEvents: 'none' }}
         />
         {xAxis}
         {yAxis}
@@ -122,7 +137,9 @@ export const PortfolioSvg = ({ width, height }) => {
         
         {projectData.map((project) => {
           const y = yScale(project.y);
-          
+          const highlighted =
+            hoveredProject === project || 
+            (!hoveredProject && hoveredType === project.category);
           return <ProjectBubble 
             x={xScale(new Date(project.date))} 
             y={y} 
@@ -130,6 +147,7 @@ export const PortfolioSvg = ({ width, height }) => {
             color={typesCategoriesColors[project.category]} 
             project={project} 
             onMouseEnter={() => {
+              preloadSpoiler(getSpoilerUrl(project.spoiler), project.spoiler);
               setHoveredType(project.category);
               setHoveredProject(project);
               setInteractionData({
@@ -153,10 +171,12 @@ export const PortfolioSvg = ({ width, height }) => {
               }
             }
             onClick={() => setSelectedProject(project)}
+            hoveredType={hoveredType}
             hoveredProject={hoveredProject}
-            highlighted={ hoveredProject === project}
+            highlighted={highlighted}
             />;
         })}
+        {legend}
       </svg>
       <div
         style={{
