@@ -18,7 +18,7 @@ export const AxisBottom = ({ xScale, xTicks, axisY, formatMonth, margin, width, 
           const x = xScale(d);
           return (
             <g key={d.toISOString()} transform={`translate(${x}, ${axisY})`}>        
-              <line x1={0} x2={0} y1={0} y2={0-height+margin.top} 
+              <line x1={0} x2={0} y1={0} y2={50-height+margin.top} 
                 stroke="currentColor"
                 strokeWidth={1} 
                 strokeDasharray="6 4"

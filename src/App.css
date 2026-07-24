@@ -85,10 +85,12 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(18, 140, 101, 0.12) 30%,
-    rgba(18, 140, 101, 0.25) 50%,
-    rgba(255, 242, 242, 0.8) 80%,
-    rgba(255, 242, 242, 1) 100%
+    rgba(18, 140, 101, 0.12) 40%,
+    rgba(18, 140, 101, 0.40) 80%,
+    rgba(18, 140, 101, 0.70) 100%,
+    transparent 100%
+    /* rgba(255, 242, 242, 0.8) 80%,
+    rgba(255, 242, 242, 1) 100% */
   );
   font-size: 0.8rem;
   color: black;

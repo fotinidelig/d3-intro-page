@@ -59,9 +59,9 @@ export const PortfolioSvg = ({ width, height }) => {
     .domain([domainStart, domainEnd])
     .range([margin.left, width - margin.right]);
 
-  const pixelsPerTick = 140;
+  const pixelsPerTick = 120;
   const numberOfTicksTarget = Math.floor(width / pixelsPerTick);
-  const xTicks = xScale.ticks(numberOfTicksTarget).slice(1);
+  const xTicks = xScale.ticks(numberOfTicksTarget);
   const formatMonth = d3.timeFormat('%b %Y');
 
   // y-scale expresses project difficulty/complexity
@@ -101,7 +101,7 @@ export const PortfolioSvg = ({ width, height }) => {
   const legend = 
   <Legend 
     x={width-margin.right} 
-    y={0} 
+    y={20} 
     height={legendHeight}
     labels={legendLabels} 
     colors={Object.values(typesCategoriesColors)}

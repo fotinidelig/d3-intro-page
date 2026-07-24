@@ -22,7 +22,7 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) =>
         return (
           <g key={label} transform={`translate(${margin.left}, ${y})`}>
             <text
-              x={0}
+              x={-10}
               y={0} // Group is already at tick y; local text y must be 0.
               dominantBaseline="middle"
               textAnchor="end"
@@ -39,7 +39,7 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) =>
         return (
           <g key={i} transform={`translate(${margin.left}, ${yScale(value)})`}>
             <line 
-            x1={10} 
+            x1={-5} 
             x2={width-margin.right-margin.left} 
             y1={0} 
             y2={0} 
@@ -51,7 +51,7 @@ export const AxisLeft = ({ yScale, yTickLabels, yTickValues, margin, width }) =>
           </g>
         );
       })}
-      <text x={0} y={margin.top} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
+      <text x={-10} y={margin.top} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
         tool
       </text>
     </g>
