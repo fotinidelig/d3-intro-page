@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 
 export default function ProjectBubble({
-  key,
   x,
   y,
   radius,
@@ -20,13 +19,12 @@ export default function ProjectBubble({
     cursor: 'pointer',
     stroke: 'white',
     strokeWidth: 4,
-    transition: 'all 0.05s ease',
+    transition: 'filter 0.05s ease',
     filter: highlighted ? 'saturate(1)' : hoveredProject || hoveredType ? 'saturate(.3)' : 'saturate(.8)',
   };
 
   return (
     <motion.circle
-      key={key}
       cx={x}
       cy={y}
       style={style}

@@ -84,11 +84,12 @@ const AIGradientBorder = ({
   const turn = useMotionValue(0);
 
   useEffect(() => {
-    animate(turn, 1, {
+    const controls = animate(turn, 1, {
       ease: "linear",
       duration,
       repeat: Infinity,
     });
+    return () => controls.stop();
   }, [duration, turn]);
 
   const [black, dark, primary, light, white] =
@@ -167,95 +168,101 @@ export function ProjectCard({ project, onClose }) {
 
   return (
     <div
-      key={project.id}
       className="project-card-backdrop"
       onClick={onClose}
       role="presentation"
     >    
-    <AIGradientBorder
-      category={project.category}
-      borderWidth={5}
-      className="mx-auto w-full max-w-lg rounded-4xl"
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.7 }}
+      transition={{ type: 'spring', stiffness: 100, damping: 11 }}
     >
-      <article
-        className="project-card"
-        style={{ '--project-accent': accent }}
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="project-card-title"
+      <AIGradientBorder
+        category={project.category}
+        borderWidth={5}
+        className="mx-auto w-full max-w-lg rounded-4xl"
       >
-        <button
-          type="button"
-          className="project-card__close"
-          onClick={onClose}
-          aria-label="Close project card"
+        <article
+          className="project-card"
+          style={{ '--project-accent': accent }}
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-card-title"
         >
-          ×
-        </button>
+          <button
+            type="button"
+            className="project-card__close"
+            onClick={onClose}
+            aria-label="Close project card"
+          >
+            ×
+          </button>
 
-        <div
-          className="project-card__media"
-          style={{ '--spoiler-aspect-ratio': aspectRatio }}
-        >
-          {spoilerUrl ? (
-            <img
-              src={spoilerUrl}
-              alt={`Preview of ${project.name}`}
-              className={`project-card__image${imageReady ? ' project-card__image--ready' : ''}`}
-              decoding="async"
-              fetchPriority="high"
-              ref={(node) => {
-                if (!node?.complete || !node.naturalWidth) return;
-                setAspectRatio(
-                  clampAspectRatio(node.naturalWidth / node.naturalHeight),
-                );
-                setImageReady(true);
-              }}
-              onLoad={(e) => {
-                const { naturalWidth, naturalHeight } = e.currentTarget;
-                if (naturalWidth && naturalHeight) {
-                  setAspectRatio(clampAspectRatio(naturalWidth / naturalHeight));
-                }
-                setImageReady(true);
-              }}
-            />
-          ) : (
-            <div className="project-card__image-placeholder">No preview</div>
-          )}
-        </div>
-
-        <div className="project-card__body">
-          <h2 id="project-card-title" className="project-card__title">
-            {project.name}
-          </h2>
-          <hr className="project-card__rule" />
-
-          <ProjectDescription text={project.description} />
-
-          <dl className="project-card__meta">
-            <div className="project-card__meta-row">
-              <dt>Date</dt>
-              <dd>{formatDate(project.date)}</dd>
-            </div>
-            <div className="project-card__meta-row">
-              <dt>Tool</dt>
-              <dd>{project.tool}</dd>
-            </div>
-            <div className="project-card__meta-row">
-              <dt>Category</dt>
-              <dd style={{ color: accent }}>{project.category}</dd>
-            </div>
-          </dl>
-
-          <div className="project-card__links">
-            <LinkRow label="Demo" href={project.demo} />
-            <LinkRow label="Code" href={project.code} />
-            <LinkRow label="Data" href={project.data} />
+          <div
+            className="project-card__media"
+            style={{ '--spoiler-aspect-ratio': aspectRatio }}
+          >
+            {spoilerUrl ? (
+              <img
+                src={spoilerUrl}
+                alt={`Preview of ${project.name}`}
+                className={`project-card__image${imageReady ? ' project-card__image--ready' : ''}`}
+                decoding="async"
+                fetchPriority="high"
+                ref={(node) => {
+                  if (!node?.complete || !node.naturalWidth) return;
+                  setAspectRatio(
+                    clampAspectRatio(node.naturalWidth / node.naturalHeight),
+                  );
+                  setImageReady(true);
+                }}
+                onLoad={(e) => {
+                  const { naturalWidth, naturalHeight } = e.currentTarget;
+                  if (naturalWidth && naturalHeight) {
+                    setAspectRatio(clampAspectRatio(naturalWidth / naturalHeight));
+                  }
+                  setImageReady(true);
+                }}
+              />
+            ) : (
+              <div className="project-card__image-placeholder">No preview</div>
+            )}
           </div>
-        </div>
-      </article>
-      </AIGradientBorder>
+
+          <div className="project-card__body">
+            <h2 id="project-card-title" className="project-card__title">
+              {project.name}
+            </h2>
+            <hr className="project-card__rule" />
+
+            <ProjectDescription text={project.description} />
+
+            <dl className="project-card__meta">
+              <div className="project-card__meta-row">
+                <dt>Date</dt>
+                <dd>{formatDate(project.date)}</dd>
+              </div>
+              <div className="project-card__meta-row">
+                <dt>Tool</dt>
+                <dd>{project.tool}</dd>
+              </div>
+              <div className="project-card__meta-row">
+                <dt>Category</dt>
+                <dd style={{ color: accent }}>{project.category}</dd>
+              </div>
+            </dl>
+
+            <div className="project-card__links">
+              <LinkRow label="Demo" href={project.demo} />
+              <LinkRow label="Code" href={project.code} />
+              <LinkRow label="Data" href={project.data} />
+            </div>
+          </div>
+        </article>
+        </AIGradientBorder>
+      </motion.div>
     </div>
   );
 }

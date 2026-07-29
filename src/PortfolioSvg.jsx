@@ -40,7 +40,7 @@ function projectBubble({
 
   return (
     <ProjectBubble
-      key={project.name}
+      key={project.id}
       x={x}
       y={y}
       radius={BUBBLE_RADIUS}
@@ -242,12 +242,12 @@ export const PortfolioSvg = ({ width, height }) => {
       >
         <Tooltip interactionData={interactionData} />
       </div>
-      {selectedProject ? (
-        <ProjectCard
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
-      ) : null}
+        {selectedProject ? (
+          <ProjectCard
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        ) : null}
     </div>
   );
 };
