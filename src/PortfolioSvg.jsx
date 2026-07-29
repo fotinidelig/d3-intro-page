@@ -11,6 +11,9 @@ import { fontSize } from "./theme/typography";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { Legend } from "./Legend";
+import { useMediaQuery } from './use-media-query';
+import { MobileAxisTop } from "./MobileAxisTop";
+import { MobileAxisLeft } from "./MobileAxisLeft";
 
 const JITTER_WIDTH = 0.3;
 const BUBBLE_RADIUS = 15;
@@ -21,8 +24,9 @@ function extractToolCategory(tool) {
 
 function projectBubble({
   project,
-  xScale,
-  yScale,
+  isMobile,
+  bubbleXScale,
+  bubbleYScale,
   width,
   hoveredType,
   hoveredProject,
@@ -31,8 +35,14 @@ function projectBubble({
   setInteractionData,
   setSelectedProject,
 }) {
-  const x = xScale(new Date(project.date));
-  const y = yScale(project.y);
+
+  const x = isMobile
+    ? bubbleXScale(project.y)
+    : bubbleXScale(new Date(project.date));
+  const y = isMobile
+    ? bubbleYScale(new Date(project.date))
+    : bubbleYScale(project.y); 
+
   const color = typesCategoriesColors[project.category];
   const highlighted =
     hoveredProject === project ||
@@ -78,7 +88,8 @@ function projectBubble({
 
 export const PortfolioSvg = ({ width, height }) => {
   if (!width || !height) return null;
-
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  console.log('isMobile:', isMobile);
   const [interactionData, setInteractionData] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -97,12 +108,28 @@ export const PortfolioSvg = ({ width, height }) => {
     return () => cancel(id);
   }, []);
 
-  const margin = { top: 50, right: 30, bottom: 60, left: 30 };
+  const margin = isMobile
+    ? { top: 80, right: 60, bottom: 40, left: 80 }
+    : { top: 50, right: 30, bottom: 60, left: 30 };
 
   const minDate = new Date(d3.min(projects.projects, (project) => project.date));
 
   const domainStart = new Date(minDate.setMonth((minDate.getMonth() - 1) % 12));
   const domainEnd = new Date();
+
+  const dateScale = d3.scaleTime()
+    .domain([domainStart, domainEnd])
+    .range(isMobile ? 
+      [height - margin.bottom, margin.top] :
+      [margin.left, width - margin.right]
+    );
+
+  const toolScale = d3.scaleLinear()
+    .domain([0, toolCategories.length - 1])
+    .range(isMobile ?
+      [margin.left, width - margin.right] :
+      [height - margin.bottom, margin.top + 50]
+    );
 
   const projectsWithJitter = useMemo(
     () =>
@@ -115,29 +142,13 @@ export const PortfolioSvg = ({ width, height }) => {
     [projects.projects],
   );
 
-  const xScale = d3
-    .scaleTime()
-    .domain([domainStart, domainEnd])
-    .range([margin.left, width - margin.right]);
-
-  const pixelsPerTick = 120;
-  const numberOfTicksTarget = Math.floor(width / pixelsPerTick);
-  const xTicks = xScale.ticks(numberOfTicksTarget);
-  const formatMonth = d3.timeFormat("%b %Y");
-
-  const yScale = d3
-    .scaleLinear()
-    .domain([0, toolCategories.length - 1])
-    .range([height - margin.bottom, margin.top + 50]);
-
-  const yTickLabels = toolCategories;
-  const yTickValues = toolCategories.map((category, index) => index);
-
-  const axisY = height - margin.bottom + 20;
+  const bubbleXScale = isMobile ? toolScale : dateScale;
+  const bubbleYScale = isMobile ? dateScale : toolScale;
 
   const bubbleProps = {
-    xScale,
-    yScale,
+    isMobile,
+    bubbleXScale,
+    bubbleYScale,
     width,
     hoveredType,
     hoveredProject,
@@ -147,23 +158,45 @@ export const PortfolioSvg = ({ width, height }) => {
     setSelectedProject,
   };
 
-  const xAxis = (
-    <AxisBottom
-      xScale={xScale}
-      xTicks={xTicks}
-      axisY={axisY}
-      formatMonth={formatMonth}
+  // xAxis for desktop
+  const pixelsPerTick = 120;
+  const numberOfTicksTarget = Math.floor(width / pixelsPerTick);
+  const xTicks = dateScale.ticks(numberOfTicksTarget);
+  const formatMonth = d3.timeFormat("%b %Y");
+
+  const xAxis = isMobile ? 
+    <MobileAxisTop
+      xScale={toolScale}
+      xTickLabels={toolCategories}
+      xTickValues={toolCategories.map((category, index) => index)}
       margin={margin}
+      height={height}
       width={width}
+    />
+    : <AxisBottom
+        xScale={dateScale}
+        xTicks={xTicks}
+        axisY={height - margin.bottom + 20}
+        formatMonth={formatMonth}
+        margin={margin}
+        width={width}
+        height={height}
+      />;
+
+  const mobileDateTicks = dateScale.ticks(5);
+  const yAxis = isMobile ? 
+    <MobileAxisLeft
+      dateScale={dateScale}
+      mobileDateTicks={mobileDateTicks}
+      margin={margin}
+      formatMonth={formatMonth}
       height={height}
     />
-  );
-
-  const yAxis = (
+    : (
     <AxisLeft
-      yScale={yScale}
-      yTickLabels={yTickLabels}
-      yTickValues={yTickValues}
+      yScale={toolScale}
+      yTickLabels={toolCategories}
+      yTickValues={toolCategories.map((category, index) => index)}
       margin={margin}
       width={width}
       height={height}
@@ -213,22 +246,27 @@ export const PortfolioSvg = ({ width, height }) => {
         {xAxis}
         {yAxis}
         <text
-          x={0}
+          x={isMobile ? width / 2 : 0}
           y={-30}
+          textAnchor={isMobile ? "middle" : "start"}
           fontSize={fontSize.subheader}
           fontWeight="bold"
           fill="#128c65"
         >
           Project exploration{" "}
         </text>
-        <text x={0} y={-10} fontSize={fontSize.annotation} fill="#128c65">
+        <text x={isMobile ? width / 2 : 0} y={-10} 
+          textAnchor={isMobile ? "middle" : "start"} 
+          fontSize={fontSize.annotation} 
+          fill="#128c65"
+        >
           learn more by clicking on the bubbles!
         </text>
 
         {sortedProjects.map((project) =>
           projectBubble({ project, ...bubbleProps }),
         )}
-        {legend}
+        {/* {legend} */}
       </svg>
       <div
         style={{

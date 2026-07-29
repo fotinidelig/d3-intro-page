@@ -18,7 +18,7 @@ function App() {
         </aside>
 
         <section className="main-content" aria-label="Visualization and projects">
-          <div className="app-viz" style={{ width: '70%', height: '40%'}} >
+          <div className="app-viz" >
             <ResponsivePortfolioSvg />
           </div>
         </section>
