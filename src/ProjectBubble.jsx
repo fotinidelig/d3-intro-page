@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { motion } from 'motion/react';
 
 export default function ProjectBubble({
+  key,
   x,
   y,
   radius,
@@ -24,12 +25,13 @@ export default function ProjectBubble({
   };
 
   return (
-    <circle
-      key={name}
+    <motion.circle
+      key={key}
       cx={x}
       cy={y}
-      r={highlighted ? radius * 1.15 : radius}
       style={style}
+      animate={{ r: highlighted ? radius * 1.2 : radius }}
+      transition={{ type: 'spring', stiffness: 100, damping: 10 }}
       onMouseEnter={(e) => {
         onMouseEnter?.(e);
       }}

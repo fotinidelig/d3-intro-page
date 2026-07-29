@@ -171,6 +171,12 @@ export const PortfolioSvg = ({ width, height }) => {
   );
 
   const projectData = projectsWithJitter;
+  const sortedProjects = hoveredProject
+    ? [
+        ...projectData.filter((project) => project !== hoveredProject),
+        hoveredProject,
+      ]
+    : projectData;
   const legendLabels = Object.keys(typesCategoriesColors);
   const legendHeight = legendLabels.length * fontSize.annotation * 1;
   const legend = (
@@ -219,13 +225,9 @@ export const PortfolioSvg = ({ width, height }) => {
           learn more by clicking on the bubbles!
         </text>
 
-        {projectData.map((project) => {
-          if (hoveredProject === project) return null;
-          return projectBubble({ project, ...bubbleProps });
-        })}
-        {hoveredProject
-          ? projectBubble({ project: hoveredProject, ...bubbleProps })
-          : null}
+        {sortedProjects.map((project) =>
+          projectBubble({ project, ...bubbleProps }),
+        )}
         {legend}
       </svg>
       <div
