@@ -1,24 +1,42 @@
 import './App.css'
 import { ResponsivePortfolioSvg } from './PortfolioSvg.jsx'
-import profilPic from './assets/profil_pic.jpg'
+import ProfileCard from './ProfileCard.jsx'
+import profileAvatar from './assets/profile_avatar.webp'
 
 function App() {
   return (
     <div className="app">
       <main className="app-main">
         <aside className="app-profile" aria-label="About">
-          <div className="app-avatar" role="img" aria-label="Profile picture placeholder" >
-            <img src={profilPic} alt="Profile picture" />
-            </div>
-          <h1 className="app-title">Hi, it's Fotini.</h1>
-          <p className="app-bio" style={{ textAlign: 'center', color: 'black' }}>
-            <span style={{ fontStyle: 'italic', color: 'black'}}>~~ Welcome to my little data corner ~~</span> <br /><br />Here you can explore my data visualization projects. <br />
-            I primarily use <b>Python</b>, <b>D3.js</b> and <b>React</b> to create my visualizations.
-          </p>
+          <ProfileCard
+            className="app-profile-card"
+            name="Fotini Deligiannaki"
+            title="Data Visualization"
+            handle="fotinidelig"
+            status="Online"
+            contactText="Contact Me"
+            avatarUrl={profileAvatar}
+            showUserInfo={false}
+            enableTilt={true}
+            enableMobileTilt
+            behindGlowEnabled={false}
+            innerGradient="linear-gradient(145deg, transparent 0%, #57c0a266 50%, transparent 100%)"
+
+            onContactClick={() => window.open('https://byfotini.com', '_blank', 'noopener,noreferrer')}
+          />
+          <div className="app-bio">
+            <p className="app-bio__welcome">Welcome to my little data corner</p>
+            <p className="app-bio__body">Explore my data visualization projects.</p>
+            <ul className="app-bio__tools" aria-label="Tools I use">
+              <li>Python</li>
+              <li>D3.js</li>
+              <li>React</li>
+            </ul>
+          </div>
         </aside>
 
         <section className="main-content" aria-label="Visualization and projects">
-          <div className="app-viz" >
+          <div className="app-viz">
             <ResponsivePortfolioSvg />
           </div>
         </section>
@@ -31,7 +49,7 @@ function App() {
           <a href="https://byfotini.com" target="_blank" rel="noopener noreferrer">
             byfotini.com
           </a>
-          ) and my {' '}
+          ) and my{' '}
           <a
             className="app-footer__icon-link"
             href="https://github.com/fotinidelig"

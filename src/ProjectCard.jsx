@@ -164,7 +164,7 @@ export function ProjectCard({ project, onClose }) {
 
   if (!project) return null;
 
-  const accent = typesCategoriesColors[project.category] ?? '#128c65';
+  const accent = typesCategoriesColors[project.category] ?? '#0A2109';
 
   return (
     <div

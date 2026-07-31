@@ -246,19 +246,22 @@ export const PortfolioSvg = ({ width, height }) => {
         {xAxis}
         {yAxis}
         <text
+          className="app-svg__title"
           x={isMobile ? width / 2 : 0}
           y={-30}
           textAnchor={isMobile ? "middle" : "start"}
           fontSize={fontSize.subheader}
-          fontWeight="bold"
-          fill="#128c65"
+          fontWeight="600"
         >
           Project exploration{" "}
         </text>
-        <text x={isMobile ? width / 2 : 0} y={-10} 
-          textAnchor={isMobile ? "middle" : "start"} 
-          fontSize={fontSize.annotation} 
-          fill="#128c65"
+        <text
+          className="app-svg__subtitle"
+          x={isMobile ? width / 2 : 0}
+          y={-10}
+          textAnchor={isMobile ? "middle" : "start"}
+          fontSize={fontSize.annotation}
+          fontWeight="600"
         >
           learn more by clicking on the bubbles!
         </text>
