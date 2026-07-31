@@ -208,10 +208,22 @@
 
   .app-profile-card {
     width: min(100%, 280px);
+    margin-bottom: 0.75rem;
   }
 
   .app-profile-card .pc-card {
     max-height: min(450px, 60vh);
+  }
+
+  .app-bio {
+    gap: 0.4rem;            /* tighter between lines */
+    margin-bottom: 4rem;  /* space before the chart section */
+    max-width: 16rem;
+  }
+
+  .app-bio__tools {
+    gap: 0.3rem;
+    margin-top: 0.1rem;
   }
 
   .main-content {
