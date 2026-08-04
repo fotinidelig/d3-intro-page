@@ -38,7 +38,7 @@
 }
 
 .app-profile-card {
-  width: min(100%, 280px);
+  width: min(100%, 250px);
   margin-bottom: 1.25rem;
 }
 
@@ -61,7 +61,7 @@
 .app-bio__welcome {
   margin: 0;
   font-family: var(--font-family-main);
-  font-size: 1.05rem;
+  font-size: 1.3rem;
   font-weight: 600;
   line-height: 1.25;
   color: #0A2109;
@@ -207,12 +207,14 @@
   }
 
   .app-profile-card {
-    width: min(100%, 280px);
-    margin-bottom: 0.75rem;
+    /* width: min(100%, 280px);
+    margin-bottom: 0.75rem; */
+    width: 0;
   }
 
   .app-profile-card .pc-card {
-    max-height: min(450px, 60vh);
+    /* max-height: min(450px, 60vh);*/
+    max-height: 0;
   }
 
   .app-bio {
