@@ -38,7 +38,7 @@ export const MobileAxisTop = ({ xScale, xTickLabels, xTickValues, margin, height
             </g>
             );
         })}
-        <text x={width/2} y={margin.top - 28} textAnchor="middle" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
+        <text x={width/2} y={margin.top - 28} textAnchor="start" fill="currentColor" opacity={0.65} fontSize={fontSize.annotation}>
           tool
         </text>
       </g>

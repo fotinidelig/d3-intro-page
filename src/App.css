@@ -199,7 +199,7 @@
 
   .app-profile {
     border-right: none;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: none;
     padding: 1rem;
     padding-bottom: 2rem;
     align-items: center;

@@ -131,6 +131,18 @@
       "data": "https://www.statistics.gr/el/statistics/-/publication/SJO02/-",
       "code": "https://github.com/fotinidelig/elstat_graphs",
       "demo": "https://github.com/fotinidelig/elstat_graphs/blob/main/src/unemployment_rate.png"
+    },
+    {
+      "name": "Pacific Data Hub - Red List Index",
+      "id": "pacific-data-hub-red-list-index",
+      "spoiler": "red_list_index_lineplot-spoiler.webp",
+      "date": "2026-07-10",
+      "description": "Exploration of the Pacific Data Hub Red List Index dataset.",
+      "tool": "Matplotlib",
+      "category": "static",
+      "data": "https://stats.pacificdata.org/vis?lc=en&df[ds]=ds%3ASPC2&df[id]=DF_SDG_15&df[ag]=SPC&df[vs]=3.0&dq=A.ER_RSK_LST.........&pd=,&to[TIME_PERIOD]=false",
+      "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/pacific_data_hub",
+      "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/pacific_data_hub/red_list_index.svg"
     }
   ]
 }

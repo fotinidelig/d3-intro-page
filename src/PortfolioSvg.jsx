@@ -15,7 +15,6 @@ import { useMediaQuery } from './use-media-query';
 import { MobileAxisTop } from "./MobileAxisTop";
 import { MobileAxisLeft } from "./MobileAxisLeft";
 
-const JITTER_WIDTH = 0.3;
 const BUBBLE_RADIUS = 15;
 
 function extractToolCategory(tool) {
@@ -89,11 +88,12 @@ function projectBubble({
 export const PortfolioSvg = ({ width, height }) => {
   if (!width || !height) return null;
   const isMobile = useMediaQuery('(max-width: 768px)');
-  console.log('isMobile:', isMobile);
   const [interactionData, setInteractionData] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
   const [hoveredType, setHoveredType] = useState(null);
+
+  const jitterWidth = isMobile ? 0.17 : 0.3;
 
   useEffect(() => {
     const schedule = window.requestIdleCallback
@@ -137,7 +137,7 @@ export const PortfolioSvg = ({ width, height }) => {
         ...project,
         y:
           toolCategories.indexOf(extractToolCategory(project.tool)) +
-          (Math.random() - 0.5) * JITTER_WIDTH,
+          (Math.random() - 0.5) * jitterWidth,
       })),
     [projects.projects],
   );
@@ -159,7 +159,7 @@ export const PortfolioSvg = ({ width, height }) => {
   };
 
   // xAxis for desktop
-  const pixelsPerTick = 120;
+  const pixelsPerTick = 130;
   const numberOfTicksTarget = Math.floor(width / pixelsPerTick);
   const xTicks = dateScale.ticks(numberOfTicksTarget);
   const formatMonth = d3.timeFormat("%b %Y");
@@ -214,8 +214,8 @@ export const PortfolioSvg = ({ width, height }) => {
   const legendHeight = legendLabels.length * fontSize.annotation * 1;
   const legend = (
     <Legend
-      x={width - margin.right}
-      y={20}
+      x={isMobile ? width - 20 : width - margin.right}
+      y={isMobile ? height - margin.bottom - legendHeight : 20}
       height={legendHeight}
       labels={legendLabels}
       colors={Object.values(typesCategoriesColors)}
@@ -269,7 +269,7 @@ export const PortfolioSvg = ({ width, height }) => {
         {sortedProjects.map((project) =>
           projectBubble({ project, ...bubbleProps }),
         )}
-        {/* {legend} */}
+        {legend}
       </svg>
       <div
         style={{
