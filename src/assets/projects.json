@@ -143,6 +143,18 @@
       "data": "https://stats.pacificdata.org/vis?lc=en&df[ds]=ds%3ASPC2&df[id]=DF_SDG_15&df[ag]=SPC&df[vs]=3.0&dq=A.ER_RSK_LST.........&pd=,&to[TIME_PERIOD]=false",
       "code": "https://github.com/fotinidelig/graph-gallery/tree/main/src/pacific_data_hub",
       "demo": "https://github.com/fotinidelig/graph-gallery/blob/main/src/pacific_data_hub/red_list_index.svg"
+    },
+    {
+      "name": "Pacific Dataviz Challenge 2026",
+      "id": "pacific-dataviz-challenge-2026",
+      "spoiler": "pacific-dataviz-challenge-2026.webp",
+      "date": "2026-08-1",
+      "description": "Participation in the Pacific Dataviz Challenge 2026.",
+      "tool": "D3.js",
+      "category": "interactive/web",
+      "data": "Various datasets -- See project demo for more information",
+      "code": "https://github.com/fotinidelig/pacific-dataviz-2026",
+      "demo": "https://fotinidelig.github.io/pacific-dataviz-2026/"
     }
   ]
 }
